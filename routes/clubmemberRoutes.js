@@ -26,4 +26,17 @@ router.post('/leave', async (req, res) => {
     }
 });
 
+// Get Members of a Club
+
+router.get('/:clubId', async (req, res) => {
+    const { clubId } = req.params;
+    try {
+        const members = await clubMemberModel.getMembersByClub(clubId);
+        res.status(200).json(members);
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Failed to fetch members" });
+    }
+});
+
 module.exports = router;
