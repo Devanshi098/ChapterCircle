@@ -25,4 +25,21 @@ router.get('/', async (req, res) => {
     }
 });
 
+// Get Club by ID
+router.get('/:clubId', async(req, res) => {
+    const { clubId } = req.params;
+
+    try {
+        const club = await clubModel.getClubById(clubId);
+        if (club) {
+            res.status(200).json(club);
+        } else {
+            res.status(404).json({ message: "Club not found" });
+        }
+        } catch (err) {
+            console.error(err);
+            res.status(500).json({ message: "Failed to fetch club" });
+        }
+});
+
 module.exports = router;
