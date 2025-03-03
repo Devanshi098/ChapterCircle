@@ -32,13 +32,24 @@ router.get('/:bookId', async (req, res) => {
  //add book
 
  router.post("/addBook", async (req, res) => {
-    const { bookName, author, coverUrl, sampleUrl } = req.body;
+    const { bookName, author, coverUrl, sampleUrl} = req.body;
     try {
         await bookModel.addBook(bookName, author, coverUrl, sampleUrl);
         res.status(201).json({ message: "Book added successfully" });
     } catch (err) {
         console.error(err);
         res.status(500).json({ message: "Failed to add book" });
+    }
+});
+
+router.post("/deleteBook/:bookId", async (req, res) => {
+    const { bookId } = req.params;
+    try {
+        await bookModel.deleteBookById(bookId);
+        res.status(201).json({ message: "Book deleted successfully" });
+    } catch (err) {
+        console.error(err);
+        res.status(500).json({ message: "Failed to delete book" });
     }
 });
 
