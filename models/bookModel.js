@@ -8,6 +8,8 @@ const addBook = async (bookName, author, coverUrl, sampleUrl) => {
 };
 
 
+
+
 const getAllBooks = async () => {
     const query = 'SELECT * FROM book';
     const [books] = await db.query(query);
@@ -21,9 +23,17 @@ const getBookById = async (bookId) => {
     return book[0];
 };
 
+//delete books by id
+const deleteBookById= async(bookId)=>
+{
+    const query=`Delete from book where book_id=?`;
+    const [book]= await(db.query(query,[bookId]));
+    return book;
+}
 
 module.exports = {
     addBook,
     getAllBooks,
-    getBookById
+    getBookById,
+    deleteBookById
 };
