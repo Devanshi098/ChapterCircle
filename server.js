@@ -1,36 +1,19 @@
-const mysql= require("mysql2/promise");
-const db= require("./config/db");
+const express = require('express');
+const app = express();
 
-const express= require("express");
-const app= express();
-
-app.use(express.json());
-
-
-
-const cors = require('cors');
-app.use(cors());
-
-// Import Routes
 const userRoutes = require('./routes/userRoutes');
 const bookRoutes = require('./routes/bookRoutes');
 const clubRoutes = require('./routes/clubRoutes');
 const clubMemberRoutes = require('./routes/clubmemberRoutes');
+const discussionRoutes = require('./routes/discussionRoutes');
 
-// Use Routes
-app.use('/api/users', userRoutes);
-app.use('/api/books', bookRoutes);
-app.use('/api/clubs', clubRoutes);
-app.use('/api/members', clubMemberRoutes);
+app.use(express.json());
 
-app.get('/', (req, res) => {
-    res.send("Welcome to ChapterCircle!");
-});
+app.use('/api', userRoutes);
+app.use('/api',bookRoutes);
+app.use(clubRoutes);
+app.use('/api',clubMemberRoutes);
+app.use('/api/discussions', discussionRoutes);
 
-//listen
 
-const port= 8080;
-app.listen(port,()=>
-{
-    console.log(`Server is running on port ${port}`);
-})
+app.listen(3000, () => console.log('Server running on port 3000'));

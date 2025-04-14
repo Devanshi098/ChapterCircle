@@ -1,56 +1,19 @@
-const express = require("express");
+const express = require('express');
 const router = express.Router();
-const bookModel = require("../models/bookModel");
+const bookController = require('../controllers/bookController');
 
-// Get All Books
-router.get('/', async (req, res) => {
-    try {
-        const books = await bookModel.getAllBooks();
-        res.status(200).json(books);
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Failed to fetch books" });
-    }
-});
+// Fetch all books
+router.get('/books', bookController.getAllBooks);
 
-// Get Book by ID
-router.get('/:bookId', async (req, res) => {
-    const { bookId } = req.params;
-    try {
-        const book = await bookModel.getBookById(bookId);
-        if (book) {
-            res.status(200).json(book);
-        } else {
-            res.status(404).json({ message: "Book not found" });
-        }
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Failed to fetch book" });
-    }
-});
+// Add a new book
+router.post('/books', bookController.createBook);
 
- //add book
+// Get a book by ID
+router.get('/books/:bookId', bookController.getBookById);
 
- router.post("/addBook", async (req, res) => {
-    const { bookName, author, coverUrl, sampleUrl} = req.body;
-    try {
-        await bookModel.addBook(bookName, author, coverUrl, sampleUrl);
-        res.status(201).json({ message: "Book added successfully" });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Failed to add book" });
-    }
-});
+// Delete a book by ID
+router.delete('/books/:bookId', bookController.deleteBook);
 
-router.post("/deleteBook/:bookId", async (req, res) => {
-    const { bookId } = req.params;
-    try {
-        await bookModel.deleteBookById(bookId);
-        res.status(201).json({ message: "Book deleted successfully" });
-    } catch (err) {
-        console.error(err);
-        res.status(500).json({ message: "Failed to delete book" });
-    }
-});
+
 
 module.exports = router;

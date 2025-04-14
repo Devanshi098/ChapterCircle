@@ -1,33 +1,33 @@
 const db = require("../config/db");
 
-// Join a Club
-const joinClub = async (userId, clubId) => {
-    const query = 'INSERT INTO clubMembers (user_id, club_id) VALUES (?, ?)';
-    const [result] = await db.query(query, [userId, clubId]);
-    return result;
-};
-
-// Leave a Club
-const leaveClub = async (userId, clubId) => {
-    const query = 'DELETE FROM clubMembers WHERE user_id = ? AND club_id = ?';
-    const [result] = await db.query(query, [userId, clubId]);
-    return result;
-};
-
-// Get Members of a Club
+// Get members by club
 const getMembersByClub = async (clubId) => {
     const query = `
         SELECT users.user_id, users.username 
-        FROM clubMembers 
-        INNER JOIN users ON clubMembers.user_id = users.user_id 
-        WHERE clubMembers.club_id = ?
+        FROM clubmembers 
+        INNER JOIN users ON clubmembers.user_id = users.user_id 
+        WHERE clubmembers.club_id = ?
     `;
     const [members] = await db.query(query, [clubId]);
     return members;
 };
 
+// Join a club
+const joinClub = async (userId, clubId) => {
+    const query = 'INSERT INTO clubmembers (club_id, user_id) VALUES (?, ?)';
+    const [result] = await db.query(query, [clubId, userId]);
+    return result;
+};
+
+// Leave a club
+const leaveClub = async (userId, clubId) => {
+    const query = 'DELETE FROM clubmembers WHERE club_id = ? AND user_id = ?';
+    const [result] = await db.query(query, [clubId, userId]);
+    return result;
+};
+
 module.exports = {
+    getMembersByClub,
     joinClub,
-    leaveClub,
-    getMembersByClub
+    leaveClub
 };
