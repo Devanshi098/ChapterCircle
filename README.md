@@ -5,8 +5,9 @@
 ## **Features**  
 ✔️ **User Registration** – Sign up with a username, email, and password.  
 ✔️ **Book Management** – Store and retrieve book details, including cover images and sample URLs.  
-✔️ **Book Clubs** – Create clubs around books, invite friends, and discuss together.  
+✔️ **Book Clubs** – Create clubs around books! 
 ✔️ **Membership System** – Users can join and leave clubs.  
+✔️ **Community discussion** - Club members can discuss their takes on the books they read.
 ✔️ **REST API** – Backend powered by **Express & MySQL**, tested via Postman.  
 
 ## **Tech Stack**  
